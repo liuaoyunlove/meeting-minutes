@@ -380,6 +380,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .bi__en { font-size: 13px; line-height: 1.6; color: var(--ink-3); }
 .bi__zh:empty, .bi__en:empty { display: none; }
 
+.min-note {
+  margin: 0 0 18px;
+  padding: 9px 13px;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-radius: 8px;
+}
+.min-note b { font-weight: 650; }
+
 .min-quote {
   margin: 0;
   padding: 12px 14px;

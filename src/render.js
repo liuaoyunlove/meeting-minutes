@@ -1,4 +1,4 @@
-﻿/** 纪要渲染：把模型对象渲染成双语 / 单语 HTML */
+/** 纪要渲染：把模型对象渲染成双语 / 单语 HTML */
 
 const esc = (s) => String(s ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -8,6 +8,7 @@ const esc = (s) => String(s ?? '')
 function pick(item, view) {
   const zh = item?.zh || '';
   const en = item?.en || '';
+  if (!zh && !en) return null;
   if (view === 'zh') return zh || en;
   if (view === 'en') return en || zh;
   return null;
@@ -128,6 +129,12 @@ export function renderMinutes(model, view = 'bi') {
   ].join('');
 
   const engineLabel = model.engine === 'ai' ? 'AI 双语' : '本地提取';
+
+  const wantLang = view === 'en' ? 'en' : view === 'zh' ? 'zh' : '';
+  const langNote = (wantLang && model.engine !== 'ai' && model.lang !== wantLang)
+    ? `<p class="min-note">本地提取只保留原文语言。需要真正的中英对照，请在「设置」把生成引擎切换为 <b>AI 双语</b> 后重新生成。</p>`
+    : '';
+
   const stamp = `<div class="stamp">
     <span>生成于 ${esc(new Date(model.updatedAt || Date.now()).toLocaleString('zh-CN', { hour12: false }))} · ${esc(engineLabel)}</span>
     <span>会议纪要 · Meeting Minutes</span>
@@ -139,5 +146,5 @@ export function renderMinutes(model, view = 'bi') {
       <p class="hint">记录太短，没能提取出可用信息。再补充几句会议内容后重新生成。</p>`;
   }
 
-  return head + body + stamp;
+  return head + langNote + body + stamp;
 }
