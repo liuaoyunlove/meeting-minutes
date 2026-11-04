@@ -1,4 +1,4 @@
-/** 应用装配：录音 → 转写 → 摘要 → 渲染 → 导出 */
+﻿/** 应用装配：录音 → 转写 → 摘要 → 渲染 → 导出 */
 
 import { summarizeOffline, normalizeAIModel } from './summarizer.js';
 import { createRecorder, speechSupported } from './recorder.js';
@@ -192,7 +192,7 @@ async function generate() {
     state.model = model;
     render();
     saveJSON(LS.minutes, model);
-    toast(model.engine === 'ai' ? 'AI 双语纪要已生成' : '本地纪要已生成，可点开编辑');
+    toast(model.engine === 'ai' ? 'AI 双语纪要已生成' : '本地纪要已生成，可直接编辑');
   } catch (err) {
     console.error(err);
     toast(`生成失败：${err.message}`, 5000);
